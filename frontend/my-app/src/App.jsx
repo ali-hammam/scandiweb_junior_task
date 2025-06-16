@@ -23,6 +23,7 @@ function App() {
             currentCategory={ currentCategory }
             cartProducts={ cartProducts }
             setCartProducts = { setCartProducts }
+            setCartVisible = { setCartVisible }
           />
         } />
         <Route path="/:category" element={
@@ -30,12 +31,14 @@ function App() {
             currentCategory={ currentCategory }
             cartProducts={ cartProducts }
             setCartProducts = { setCartProducts }
+            setCartVisible = { setCartVisible }
           />
         } />
         <Route path="/product/:productId" element={
           <ProductDisplayContainer 
             cartProducts={ cartProducts }
             setCartProducts = { setCartProducts }
+            setCartVisible = { setCartVisible }
           />
         } />
       </Routes>

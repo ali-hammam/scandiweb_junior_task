@@ -3,18 +3,11 @@ import './product_card.css';
 import buy from '../../assets/buy.jpg';
 
 
-const ProductCardComponent = ({ product }) => {
+const ProductCardComponent = ({ product, setCartVisible }) => {
   const navigate = useNavigate();
 
   const routeToProduct = () => {
     navigate('/product/' + product.id);
-  }
-
-  const toKebabCase = (str) => {
-    return str
-      .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .replace(/[\s_]+/g, '-')
-      .toLowerCase();
   }
 
   const handleAddToCart = (e) => {
@@ -51,10 +44,11 @@ const ProductCardComponent = ({ product }) => {
 
     localStorage.setItem('cart', JSON.stringify(cart));
     window.dispatchEvent(new Event("cartUpdated")); 
+    setCartVisible(true);
   }
 
   return (
-    <div className="product-card" onClick={routeToProduct} data-testid={toKebabCase('product-'+ product.name)}>
+    <div className="product-card" onClick={routeToProduct} >
       <div className="panel-body">
         <div className='product-image-wrapper'>
         <img

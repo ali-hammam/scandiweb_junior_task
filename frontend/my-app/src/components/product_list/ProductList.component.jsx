@@ -1,7 +1,14 @@
 import ProductCardComponent from "../product_card/ProductCard.component";
 import './product_list.css';
 
-const ProductListComponent = ({ products, currentCategory }) => {
+const ProductListComponent = ({ products, currentCategory, setCartVisible }) => {
+  const toKebabCase = (str) => {
+    return str
+      .replace(/[_\s]+/g, '-')
+      .replace(/[^a-zA-Z0-9-]/g, '')
+      .toLowerCase();
+  };
+
   const category = currentCategory.toLowerCase();
   return (
     <div  style={{ marginTop:'80px', marginLeft:'8%' }}>
@@ -11,9 +18,9 @@ const ProductListComponent = ({ products, currentCategory }) => {
         {products && products.map((product) => {
           if(category === 'all') {
             return(
-              <div className="col-sm-4 product-col" key={product.id}>
+              <div className="col-sm-4 product-col" key={product.id} data-testid={toKebabCase('product-'+ product.name)}>
                   <div className="product-wrapper">
-                    <ProductCardComponent product={product} />
+                    <ProductCardComponent setCartVisible={setCartVisible} product={product} />
                   </div>
               </div>
             );
@@ -23,9 +30,9 @@ const ProductListComponent = ({ products, currentCategory }) => {
             <>
               {
                 product.category_id === currentCategory &&
-                <div className="col-sm-4 product-col" key={product.id}>
+                <div className="col-sm-4 product-col" key={product.id} data-testid={toKebabCase('product-'+ product.name)}>
                   <div className="product-wrapper">
-                    <ProductCardComponent product={product} />
+                    <ProductCardComponent setCartVisible={setCartVisible} product={product} />
                   </div>
                 </div>
               }

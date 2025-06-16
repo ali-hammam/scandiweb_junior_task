@@ -46,11 +46,11 @@ const CartComponent = ({
       {menuVisible && (
         <>
         <div className="cart-backdrop" onClick={toggleMenu}></div>
-        <div className="nav-cart-overlay">
+        <div className="nav-cart-overlay" data-testid='cart-overlay'>
           <h4><strong>My Bag</strong>, {itemCount} {itemCount === 1 ? 'Item' : 'Items'}</h4>
           {
             cartItems.map((item, index) => (
-              <div key={index}>
+              <div key={index} data-testid='cart-item'>
                 <div className='row' style={{display: 'flex', verticalAlign:'middle'}}>
                   <div className='col-sm-6'>
                     <strong>{ item.name }</strong>

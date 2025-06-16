@@ -1,16 +1,15 @@
 const AttributeComponent = ({ attribute, attributeValues, setAttributeValues }) => {
   const toKebabCase = (str) => {
     return str
-      .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .replace(/[\s_]+/g, '-')
-      .toLowerCase();
-  }
+      .replace(/[_\s]+/g, '-')
+      .replace(/[^a-zA-Z0-9-]/g, '')
+  };
   
   const renderColorAttribute = (attribute) => {
 
     const selectedColor = attributeValues[attribute.name.toLowerCase()];
     return (
-      <div data-testid={toKebabCase('product-attribute-Color')}>
+      <div data-testid={toKebabCase('product-attribute-color')}>
         {
           attribute.items.map(color => (
             <button
@@ -24,7 +23,11 @@ const AttributeComponent = ({ attribute, attributeValues, setAttributeValues }) 
                 marginRight: '5px'
               }}
               onClick={() => setAttributeValues({...attributeValues, color: color.value})}
-              data-testid={toKebabCase('product-attribute-Color-' + color.value)}
+              data-testid={selectedColor === color.value ? 
+                'product-attribute-color-' + color.displayValue + '-selected'
+                :
+                'product-attribute-color-' + color.displayValue
+              }
             />
           ))
         }
@@ -37,28 +40,34 @@ const AttributeComponent = ({ attribute, attributeValues, setAttributeValues }) 
     return (
       <>
         {
-          <div className="btn-group" data-testid={toKebabCase('product-attribute-' + attribute.name) }>
+          <div className="btn-group" data-testid={toKebabCase('product-attribute-' + attribute.name.toLowerCase()) }>
           {attribute.items.map(item => (
-            <label
-              key={item.value}
-              className={`btn btn-default ${selectedAttribute === item.value ? 'active' : ''}`}
-            >
-              <input 
-                type="radio"
+              <button 
+                style={{
+                  backgroundColor: selectedAttribute === item.value ? 'black' :'#ffffff',
+                  color: selectedAttribute === item.value ? '#ffffff' :'black',
+                  width: 'auto',
+                  height: '40px',
+                  border: '2px solid black',
+                  marginRight: '5px'
+                }}
                 name={attribute.name} 
+                className="btn btn-light"
                 autoComplete="off" 
                 value={item.value}
-                checked={selectedAttribute === item.value}
-                onChange={() => setAttributeValues({
+                onClick={() => setAttributeValues({
                   ...attributeValues,
                   [attribute.name.toLowerCase()]: item.value
                 })}
                 readOnly
-                style={{ display: 'none' }}
-                data-testid={toKebabCase('product-attribute-' + attribute.name + '-' + item.value)}
-              />
-              {item.value}
-            </label>
+                data-testid={
+                  selectedAttribute === item.value ?
+                  `product-attribute-${toKebabCase(attribute.name.toLowerCase())}-${toKebabCase(item.value)}-selected`
+                  :`product-attribute-${toKebabCase(attribute.name.toLowerCase())}-${toKebabCase(item.value)}`
+                }
+              >
+                {item.value}
+              </button>
           ))}
         </div>
         }

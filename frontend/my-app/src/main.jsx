@@ -7,6 +7,7 @@ import App from './App.jsx'
 
 const client = createClient({
   url: 'http://localhost:8000/graphql',
+  //url: '/backend/index.php/graphql',
   exchanges: [cacheExchange, fetchExchange],
 });
 

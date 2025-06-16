@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 import ProductDisplayComponent from './ProductDisplayComponent';
 import { PRODUCT_QUERY } from '../../query/product.query';
 
-const ProductDisplayContainer = () => {
+const ProductDisplayContainer = ({ setCartVisible }) => {
   const { productId } = useParams();
   const [result] = useQuery({
     query: PRODUCT_QUERY(productId),
@@ -16,7 +16,7 @@ const ProductDisplayContainer = () => {
 
   return (
     <>
-      { data && <ProductDisplayComponent product={data.product}/> }
+      { data && <ProductDisplayComponent product={data.product} setCartVisible={ setCartVisible }/> }
     </>
   )
 }

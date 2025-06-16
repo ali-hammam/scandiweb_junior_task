@@ -2,7 +2,7 @@ import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import AttributeComponent from './Attribute.component';
 
-const ProductAttributesComponent = ({ product }) => {
+const ProductAttributesComponent = ({ product, setCartVisible }) => {
   const [attributeValues, setAttributeValues] = useState({});
   const description = product.description.replace(/<[^>]*>/g, '');
 
@@ -35,11 +35,12 @@ const ProductAttributesComponent = ({ product }) => {
 
     localStorage.setItem('cart', JSON.stringify(cart));
     window.dispatchEvent(new Event("cartUpdated"));
+    setCartVisible(true);
   }
 
   return (
     <div className="container" style={{ maxWidth: '400px', marginTop: '40px' }}>
-      <h3><strong>Running Shorts</strong></h3>
+      <h3><strong>{product.name}</strong></h3>
       {
         product.attributes.map(attribute => {
           return(

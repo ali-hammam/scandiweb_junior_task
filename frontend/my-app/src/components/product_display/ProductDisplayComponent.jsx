@@ -1,7 +1,7 @@
 import ImageCarouselComponent from '../ImageCarousel/ImageCarousel.component'
 import ProductAttributesComponent from '../product_attributes/ProductAttributes.component'
 
-const ProductDisplayComponent = ({ product }) => {
+const ProductDisplayComponent = ({ product, setCartVisible }) => {
   return (
     <div className='row'>
       <div className='col-sm-8'>
@@ -9,7 +9,7 @@ const ProductDisplayComponent = ({ product }) => {
       </div>
 
       <div className='col-sm-2'>
-        <ProductAttributesComponent product={ product } />
+        <ProductAttributesComponent setCartVisible={setCartVisible} product={ product } />
       </div>
     </div>
   )
