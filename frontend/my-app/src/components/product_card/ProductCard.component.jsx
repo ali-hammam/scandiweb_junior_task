@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './product_card.css';
 import buy from '../../assets/buy.jpg';
+import { saveToCart } from '../../lib/AddToCart';
 
 
 const ProductCardComponent = ({ product, setCartVisible }) => {
@@ -26,24 +27,7 @@ const ProductCardComponent = ({ product, setCartVisible }) => {
       return accum;
     }, {});
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const existingIndex = cart.findIndex(item =>
-      item.id === selectedProduct.id &&
-      JSON.stringify(item.attributes) === JSON.stringify(selectedProduct.attributes)
-    );
-
-    if (existingIndex !== -1) {
-      cart[existingIndex].quantity += 1;
-    } else {
-    cart.push({
-      ...selectedProduct,
-      quantity: 1
-    });
-  }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    window.dispatchEvent(new Event("cartUpdated")); 
+    saveToCart(selectedProduct); 
     setCartVisible(true);
   }
 

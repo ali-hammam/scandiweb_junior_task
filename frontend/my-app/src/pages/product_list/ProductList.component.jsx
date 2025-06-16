@@ -1,4 +1,4 @@
-import ProductCardComponent from "../product_card/ProductCard.component";
+import ProductCardComponent from "../../components/product_card/ProductCard.component";
 import './product_list.css';
 
 const ProductListComponent = ({ products, currentCategory, setCartVisible }) => {

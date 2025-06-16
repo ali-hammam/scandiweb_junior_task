@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductDisplayContainer from './components/product_display/ProductDisplayContainer';
-import ProductListContainer from './components/product_list/ProductList.container';
+import ProductDisplayContainer from './pages/product_display/ProductDisplayContainer';
+import ProductListContainer from './pages/product_list/ProductList.container';
 import NavbarContainer from './components/Navbar/Navbar.container';
 import './App.css';
 

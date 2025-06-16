@@ -1,5 +1,5 @@
-import ImageCarouselComponent from '../ImageCarousel/ImageCarousel.component'
-import ProductAttributesComponent from '../product_attributes/ProductAttributes.component'
+import ImageCarouselComponent from '../../components/ImageCarousel/ImageCarousel.component'
+import ProductAttributesComponent from '../../components/product_attributes/ProductAttributes.component'
 
 const ProductDisplayComponent = ({ product, setCartVisible }) => {
   return (
