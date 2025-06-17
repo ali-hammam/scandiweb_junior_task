@@ -16,7 +16,6 @@ class createProductsTable
                 $table->string('brand');
                 $table->text('description')->nullable();
                 $table->string('category_id');  // foreign key as string
-                $table->json('attributes')->nullable();
                 $table->json('gallery')->nullable();
                 $table->string('__typename')->default('Product');
 

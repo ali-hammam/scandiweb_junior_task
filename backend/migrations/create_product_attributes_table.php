@@ -12,6 +12,7 @@ class CreateProductAttributesTable {
                 $table->id();
                 $table->string('product_id');
                 $table->unsignedBigInteger('attribute_id');
+                $table->json('item_ids');
                 $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
                 $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             });

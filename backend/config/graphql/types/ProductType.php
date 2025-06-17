@@ -2,6 +2,7 @@
 namespace Config\GraphQL\Types;
 require_once __DIR__ . '/AttributeSetType.php';
 require_once __DIR__ . '/ProductPriceType.php';
+require_once __DIR__ . '/../../../app/controllers/ProductController.php';
 
 use Config\GraphQL\Types\AttributeSetType;
 use Config\GraphQL\Types\ProductPriceType;
@@ -19,7 +20,13 @@ class ProductType extends ObjectType {
                 'category_id' => Type::string(),
                 'brand' => Type::string(),
                 'gallery' => Type::listOf(Type::string()),
-                'attributes' => Type::listOf(new AttributeSetType()),
+                'attributes' => [
+                    'type' => Type::listOf(new AttributeSetType()),
+                    'resolve' => function ($product) {
+                        $controller = new \App\Controllers\ProductController();
+                        return $controller->formatProduct($product);
+                    }
+                ],
                 'product_price' => [
                     'type' => TypeRegistry::productPrice(),
                     'resolve' => function ($product) {
