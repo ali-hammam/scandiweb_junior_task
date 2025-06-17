@@ -19,7 +19,6 @@ class createProductsTable
                 $table->json('gallery')->nullable();
                 $table->string('__typename')->default('Product');
 
-                // Optional: Foreign key constraint
                 $table->foreign('category_id')->references('name')->on('categories')->onDelete('cascade');
             });
         }

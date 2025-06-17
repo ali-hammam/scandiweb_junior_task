@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import CartComponent from './cart.component';
 
 const CartContainer = ({ cartItems, setCartVisible, cartVisible }) => {  
+  const [message, setMessage] = useState('');
+
   const toKebabCase = (str) => {
     return str
       .replace(/[_\s]+/g, '-')
@@ -90,6 +93,8 @@ const CartContainer = ({ cartItems, setCartVisible, cartVisible }) => {
         renderColorAttribute = { renderColorAttribute }
         renderAttributes = { renderAttributes }
         totalPrice = { countTotalPrice() }
+        setMessage = { setMessage }
+        message = { message }
       />
     </>
   )

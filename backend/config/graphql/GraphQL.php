@@ -6,8 +6,10 @@ require_once __DIR__ . '/resolvers/ProductsResolver.php';
 require_once __DIR__ . '/resolvers/ProductsByCategoryResolver.php';
 require_once __DIR__ . '/resolvers/ProductById.php';
 require_once __DIR__ . '/resolvers/CategoriesResolver.php';
+require_once __DIR__ . '/resolvers/OrderResolver.php';
 
 use Config\GraphQL\Resolvers\CategoriesResolver;
+use Config\GraphQL\Resolvers\OrderResolver;
 use Config\GraphQL\Resolvers\ProductsByCategoryResolver;
 use Config\GraphQL\Resolvers\ProductById;
 use Config\GraphQL\Resolvers\ProductsResolver;
@@ -25,6 +27,7 @@ class GraphQL {
             'product' => ProductById::class,
             'productsByCategory' => ProductsByCategoryResolver::class,
             'categories' => CategoriesResolver::class,
+            'createOrder' => OrderResolver::class,
         ];
         $fields = [];
 
@@ -45,15 +48,10 @@ class GraphQL {
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
-                    'sum' => [
-                        'type' => Type::int(),
-                        'args' => [
-                            'x' => ['type' => Type::int()],
-                            'y' => ['type' => Type::int()],
-                        ],
-                        'resolve' => static function ($calc, array $args) {
-                            return $args['x'] + $args['y'];
-                        },
+                    'createOrder' => [
+                        'type' => OrderResolver::type(),
+                        'args' => OrderResolver::args(),
+                        'resolve' => OrderResolver::resolve(),
                     ],
                 ],
             ]);

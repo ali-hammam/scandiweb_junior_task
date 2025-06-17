@@ -14,6 +14,7 @@ use Migrations\CreateProductAttributesTable;
 use Migrations\CreateProductGalleriesTable;
 use Migrations\CreateProductPricesTable;
 use Migrations\createProductsTable;
+use Migrations\CreateOrdersTable;
 
 $migrations = [
     new CreateCategoriesTable(),
@@ -23,7 +24,8 @@ $migrations = [
     new CreateCurrenciesTable(),
     new createProductAttributesTable(),
     new CreateProductGalleriesTable(),
-    new CreateProductPricesTable()
+    new CreateProductPricesTable(),
+    new CreateOrdersTable()
 ];
 
 foreach ($migrations as $migration) {

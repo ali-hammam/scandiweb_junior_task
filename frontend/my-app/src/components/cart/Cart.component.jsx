@@ -1,6 +1,8 @@
+import { useMutation } from 'urql';
 import cart from '../../assets/cart.png';
 
 import './cart.css';
+import { CREATE_ORDER } from '../../query/Order.mutation';
 
 const CartComponent = ({ 
   toggleMenu,
@@ -9,8 +11,11 @@ const CartComponent = ({
   cartItems,
   renderColorAttribute,
   renderAttributes,
-  totalPrice
+  totalPrice,
+  message,
+  setMessage
 }) => {
+  const [createOrderResult, createOrder] = useMutation(CREATE_ORDER);
 
   const increaseQty = (cartItem) => {
     const updatedCart = cartItems.map(item => {
@@ -36,12 +41,50 @@ const CartComponent = ({
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
+  const placeOrder = async(e) => {
+    e.stopPropagation();
+    toggleMenu()
+    const order = cartItems.map((item) => formatingOrderObject(item));
+    const result = await createOrder({ orders: order });
+
+    if (result.error) {
+      console.error('Error creating order:', result.error);
+    } else {
+      setMessage('Successfully order placing');
+      localStorage.setItem('cart', JSON.stringify([]));
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+    
+    setTimeout(() => setMessage(''), 3000);
+  }
+
+  const formatingOrderObject = (cartItem) => {
+    const attributeArray = Object.entries(cartItem.attributes).map(([key, value]) => ({
+      key,
+      value,
+    }));
+    
+    return {
+      product_id: cartItem.id,
+      unit_price: cartItem.price,
+      quantity: cartItem.quantity,
+      attributes: attributeArray,
+    };
+  }
+  
   return (
     <div className="nav-cart-wrapper">
       <button className="nav-cart-button" onClick={toggleMenu} data-testid='cart-btn'>
         <img src={cart} alt="Cart" className="nav-cart-icon" style={{ width: "144px", height: "40px" }}/>
         {itemCount > 0 && <span className="nav-cart-count">{ itemCount }</span>}
       </button>
+
+      {message && (
+        <div className='alert alert-success' style={{ marginTop: '10px', color: 'green' }}>
+          {message}
+        </div>
+      )}
+
 
       {menuVisible && (
         <>
@@ -110,6 +153,7 @@ const CartComponent = ({
             class="btn btn-success btn-lg btn-block"
             disabled={ cartItems.length === 0 }
             style={cartItems.length === 0 ? {background: 'grey'} : {}}
+            onClick={ placeOrder }
           >
             PLACE ORDER
           </button>

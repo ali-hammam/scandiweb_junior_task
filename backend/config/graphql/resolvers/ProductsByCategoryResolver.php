@@ -32,8 +32,6 @@ class ProductsByCategoryResolver implements GraphQLResolver
                 return $productController->getProductByCategory($args['category_id']);
             }
 
-            // Example: fetch from DB (mocked here)
-            // In real case, you'd call DB::table('products')->where('id', $productId)->first() or Eloquent
             return [
                 'message' => 'Product not found',
             ];

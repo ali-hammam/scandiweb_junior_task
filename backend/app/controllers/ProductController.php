@@ -17,7 +17,6 @@ class ProductController
         $product = Product::find($id);
         if ($product) {
             $product->gallery = json_decode($product->gallery, true);
-            //$product->attributes = $this->formatProduct($product);
         }
 
         return $product;
